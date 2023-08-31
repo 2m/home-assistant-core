@@ -252,7 +252,7 @@ async def test_input_number(client, input_number_entities) -> None:
     )
 
     assert (
-        'input_number_state_celsius{domain="input_number",'
+        'input_number_unit_celsius{domain="input_number",'
         'entity="input_number.target_temperature",'
         'friendly_name="Target temperature"} 22.7' in body
     )
@@ -528,7 +528,7 @@ async def test_number(client, number_entities):
     body = await generate_latest_metrics(client)
 
     assert (
-        'sensor_unit_percent{domain="number",'
+        'number_unit_percent{domain="number",'
         'entity="number.valve_position",'
         'friendly_name="Valve Position"} 50.0' in body
     )
@@ -1050,10 +1050,10 @@ async def sensor_fixture(
 
 
 @pytest.fixture(name="number_entities")
-async def number_fixture(hass, registry):
+async def number_fixture(hass, entity_registry: er.EntityRegistry):
     """Simulate sensor entities."""
     data = {}
-    number_1 = registry.async_get_or_create(
+    number_1 = entity_registry.async_get_or_create(
         domain=number.DOMAIN,
         platform="test",
         unique_id="number_1",
